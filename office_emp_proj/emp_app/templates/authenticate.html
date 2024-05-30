@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signin Office</title>
+</head>
+
+<style>
+
+    .main{
+        border: 2px solid black;
+        margin: 100px;
+        border-radius: 20px;
+        background-color: beige;
+    }
+
+    p{
+        text-align: center;
+        font-size: 3rem;
+        max-width: 60vw;
+        padding: 10px;
+    }
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: skyblue;
+
+    }
+    input{
+        height: 5vh;
+        width: 30vw;
+        border-radius: 10px;
+         border-color: skyblue;
+    }
+
+    form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 30px;
+        border-radius: 10px;
+    }
+    button{
+        height: 5vh;
+        width: 7vw;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        background-color: rgb(64, 241, 64);
+        border: none;
+    }
+    button:hover{
+        width: 8vw;
+    }
+</style>
+
+<body>
+    <div class="main">
+        <p>WELCOME TO OUR OFFICE APP</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="Username" id="Username" placeholder="Username">
+            <input type="text" name="Password" id="Password" placeholder="Password">
+            <button>Signin</button>
+        </form>
+    </div>
+</body>
+</html>
