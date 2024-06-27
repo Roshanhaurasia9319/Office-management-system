@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Role, Department, Employee
+from .models import Role, Department, Employee, MyAuthentication, Otp
 
 
 
@@ -7,3 +7,5 @@ from .models import Role, Department, Employee
 admin.site.register(Employee)
 admin.site.register(Department)
 admin.site.register(Role)
+admin.site.register(MyAuthentication)
+admin.site.register(Otp)

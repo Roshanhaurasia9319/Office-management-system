@@ -11,7 +11,7 @@
     integrity="sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLzUCCUXOY2j/LSvXYuG6Bqs43ALlhIqAJVRb" crossorigin="anonymous">
 
   <title>Office Employment Management System</title>
-   <link rel="stylesheet" href="../static/index.css">
+  
    <script src="../static/script.js"></script>
 </head>
 
@@ -27,6 +27,28 @@
 
 </script>
 
+<style>
+  body {
+    background: url(../static/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 150px;
+  }
+  
+  .view {
+    display: none;
+  }
+
+  table{
+    transition: all 2s ease-in-out;
+  }
+</style>
+
 
 <body>
   <h1 class="text-light bg-black">
@@ -38,7 +60,7 @@
       <a class="btn btn-primary btn-outline-light" type="button" onclick="show()">VIEW DETAILS OF ALL EMPLOY</a>
     
       <div class="view">
-        <table class="table my-10px table-striped">
+        <table class="table caption-top my-10px table-striped">
           <thead >
             <tr>
               <th scope="col">id</th>

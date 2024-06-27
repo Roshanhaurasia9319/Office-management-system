@@ -1,24 +1,77 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Employee, Department, Role
+from .models import Employee, Department, Role, MyAuthentication, Otp
 from django.http import HttpResponseBadRequest
 from .models import Employee, Department, Role
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from .helpers import generate_otp, send_otp
+from django.core.cache import cache
+# from rest_framework.decorators import api_view
+# from rest_framework.response import response
 # Create your views here.
+
+
+def send_confirmation_mail(email):
+    send_mail(
+        "Registration Successful on Office Management App",
+        "10000 Rs Debited. Kindly review if it's not you. This is a sample generated mail. Do not reply!",
+        "appt79825@gmail.com",
+        [email],
+        fail_silently=False,
+    )
 
 def authenticate(request):
     if request.method == 'POST':
-        Username = request.POST.get('Username')
-        Password = request.POST.get('Password')
-        if Password == "welcome1" and Username == "Officer":
-            return redirect(index)
-        else:
-            return HttpResponse("Password is incorrect! TRY AGAIN")
-    
-    
+        username = request.POST.get('Username')
+        password = request.POST.get('Password')
+        email = request.POST.get('Email')
+        phone = request.POST.get('Phone')
+
+        if email:
+            exists = MyAuthentication.objects.filter(Email=email).exists()
+            if exists:
+                return JsonResponse({'exists': exists})
+            else:
+                otp = generate_otp()
+                cache.set(email, otp, timeout=600)
+                send_otp(email, otp)
+                request.session['user_data'] = {
+                    'username':username,
+                    'password':password,
+                    'email':email,
+                    'phone':phone
+                }
+               
+                return redirect('otp')
+                # Uncomment below if saving user only after OTP validation
+                # new_user = MyAuthentication(Username=username, Password=password, Email=email, Phone=phone)
+                # new_user.save()
     return render(request, "authenticate.html")
 
-
+def otp(request):
+    if request.method == "POST":
+        entered_otp = request.POST.get('Otp')
+        email = request.POST.get('Email')
+        cached_otp = cache.get(email)
+        
+        if cached_otp == entered_otp:
+            user_data = request.session.get('user_data')
+            if user_data:
+                new_user = MyAuthentication(
+                    Username = user_data['username'],
+                    Password = user_data['password'],
+                    Email = user_data['email'],
+                    Phone = user_data['phone']
+                )
+                new_user.save()
+                send_confirmation_mail(email)
+                del request.session['user_data']    
+            return redirect('index')
+        else: 
+            return HttpResponse("Error: Invalid OTP")
+    return render(request, 'otp.html')
 
 
 def index(request, emp_id=0):

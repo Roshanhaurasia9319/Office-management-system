@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import validate_email
+
 
 # Create your models here.
 
@@ -28,3 +30,16 @@ class Employee(models.Model):
     hire_date=models.DateField()
     def __str__(self) :
         return self.first_name + self.last_name
+    
+    
+class MyAuthentication(models.Model):
+    Username= models.CharField( max_length=50)
+    Password = models.CharField(max_length=10)
+    Email = models.EmailField( max_length=254, validators=[validate_email])
+    Phone = models.CharField(max_length=10, default=None)
+    
+    
+class Otp(models.Model):
+    Email = models.EmailField(max_length=254, default=None)
+    User_otp = models.IntegerField()
+    

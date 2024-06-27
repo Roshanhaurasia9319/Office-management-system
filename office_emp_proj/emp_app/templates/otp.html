@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url(../static/login.jpg) center no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center bg-info vh-100">
+    <div class="container p-5 rounded-lg" style="background-color: rgba(245, 245, 220, 0.541);">
+        <p class="text-center display-4">WELCOME TO OUR OFFICE APP</p>
+        <form method="POST" class="d-flex flex-column align-items-center" >
+            {% csrf_token %}
+            <div class="form-group w-75">
+                <input type="text" class="form-control" placeholder="Email" id="Email" name="Email">
+            </div>
+            <div class="form-group w-75">
+                <input type="text" class="form-control" placeholder="Enter Otp" id="Otp" name="Otp">
+            </div>
+            <button type="submit" class="btn btn-success w-50">Verify</button>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
